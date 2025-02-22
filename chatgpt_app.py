@@ -1,8 +1,7 @@
 import openai
 import os
-import shutil
 from dotenv import load_dotenv
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template
 
 # Load environment variables
 load_dotenv()
@@ -11,14 +10,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize Flask app
-app = Flask(__name__)
-
-# Copy index.html to root for GitHub Pages
-root_index_path = "index.html"
-templates_index_path = "templates/index.html"
-
-if os.path.exists(templates_index_path):
-    shutil.copy(templates_index_path, root_index_path)
+app = Flask(__name__, template_folder=".")
 
 # Function to get response from ChatGPT API
 def get_chatgpt_response(user_message):
@@ -35,7 +27,7 @@ def get_chatgpt_response(user_message):
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Flask route to render index.html from templates
+# Flask route to render index.html from root
 @app.route("/", methods=["GET", "POST"])
 def home():
     response = ""
