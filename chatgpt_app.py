@@ -35,7 +35,7 @@ def home():
         user_input = request.form["user_input"]
         response = get_chatgpt_response(user_input)
     return render_template("index.html", response=response)
-
+##
 # Run Flask app
 if __name__ == "__main__":
     app.run(debug=True)
