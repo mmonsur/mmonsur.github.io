@@ -27,15 +27,15 @@ def get_chatgpt_response(user_message):
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Flask route to render index.html from root
+# Flask route to render index.html
 @app.route("/", methods=["GET", "POST"])
 def home():
-    response = ""
+    response = None  # Ensure response is always defined
     if request.method == "POST":
         user_input = request.form["user_input"]
         response = get_chatgpt_response(user_input)
     return render_template("index.html", response=response)
-##
+
 # Run Flask app
 if __name__ == "__main__":
     app.run(debug=True)
